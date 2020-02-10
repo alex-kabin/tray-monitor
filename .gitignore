@@ -1,0 +1,7 @@
+.idea
+.vs
+_Resharper.Caches
+packages
+bin/
+obj/
+*.user

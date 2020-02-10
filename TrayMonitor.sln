@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrayMonitor", "TrayMonitor\TrayMonitor.csproj", "{8AE595EF-36C9-4A3B-B6FD-7E62D57FE3DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensor.Core", "Sensor.Core\Sensor.Core.csproj", "{B229042F-417D-4E75-9AF0-582C964FA587}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensor.HandsFreeBattery", "Sensor.HandsFreeBattery\Sensor.HandsFreeBattery.csproj", "{FA4E4091-F34F-46AD-A1B3-E411471B5AB0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging.Core", "Logging.Core\Logging.Core.csproj", "{E556AB36-1F85-4BE4-B572-ACD110B618A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrayMonitor.Core", "TrayMonitor.Core\TrayMonitor.Core.csproj", "{19942248-C4D7-4F63-8B23-7B922B8F4C82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensor.SpringActuatorHealth", "Sensor.SpringActuatorHealth\Sensor.SpringActuatorHealth.csproj", "{E1B5CC72-8E71-4D63-BEB3-4C0A73F9BA11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8AE595EF-36C9-4A3B-B6FD-7E62D57FE3DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AE595EF-36C9-4A3B-B6FD-7E62D57FE3DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AE595EF-36C9-4A3B-B6FD-7E62D57FE3DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AE595EF-36C9-4A3B-B6FD-7E62D57FE3DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B229042F-417D-4E75-9AF0-582C964FA587}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B229042F-417D-4E75-9AF0-582C964FA587}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B229042F-417D-4E75-9AF0-582C964FA587}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B229042F-417D-4E75-9AF0-582C964FA587}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA4E4091-F34F-46AD-A1B3-E411471B5AB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4E4091-F34F-46AD-A1B3-E411471B5AB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4E4091-F34F-46AD-A1B3-E411471B5AB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4E4091-F34F-46AD-A1B3-E411471B5AB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E556AB36-1F85-4BE4-B572-ACD110B618A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E556AB36-1F85-4BE4-B572-ACD110B618A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E556AB36-1F85-4BE4-B572-ACD110B618A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E556AB36-1F85-4BE4-B572-ACD110B618A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19942248-C4D7-4F63-8B23-7B922B8F4C82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19942248-C4D7-4F63-8B23-7B922B8F4C82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19942248-C4D7-4F63-8B23-7B922B8F4C82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19942248-C4D7-4F63-8B23-7B922B8F4C82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1B5CC72-8E71-4D63-BEB3-4C0A73F9BA11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1B5CC72-8E71-4D63-BEB3-4C0A73F9BA11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1B5CC72-8E71-4D63-BEB3-4C0A73F9BA11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1B5CC72-8E71-4D63-BEB3-4C0A73F9BA11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {90BBBFC6-0F02-4E5C-90AB-0FE7A3C95B41}
+	EndGlobalSection
+EndGlobal
