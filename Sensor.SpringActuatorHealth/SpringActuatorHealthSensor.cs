@@ -70,23 +70,20 @@ namespace Sensor.SpringActuatorHealth
                     var request = new RestRequest(_url) {
                             Timeout = (int)_timeout.TotalMilliseconds
                     };
-                    var response =
-                            await _restClient.ExecuteGetAsync<SpringActuatorHealthInfo>(request, cancellationToken);
-                    if (response.IsSuccessful) {
-                        Error = null;
+                    var response = await _restClient.ExecuteGetAsync<SpringActuatorHealthInfo>(request, cancellationToken);
+                    if (response.Data != null) {
                         Value = response.Data.Status == SpringActuatorHealthStatus.UP;
+                        Log.Info($"The server responded with HTTP code {(int) response.StatusCode} ({response.StatusCode}); result={response.Data.Status}");
                     }
                     else {
-                        Value = null;
-                        if (response.ErrorException != null) {
-                            Error = new SensorException("Connection failure", response.ErrorException);
+                        if (response.ErrorException == null) {
+                            Log.Warn(
+                                    $"The server responded with HTTP code {(int) response.StatusCode} ({response.StatusCode})",
+                                    response.Content);
+                            Error = new SensorException("Bad response");
+                        } else {
                             Log.Warn($"Connection failure: {response.ErrorMessage}", response.ErrorException);
-                        }
-                        else {
-                            Error = new SensorException(
-                                    $"Connection failure: server responded with HTTP status ${(int) response.StatusCode}");
-                            Log.Warn($"Server responded with HTTP status ${(int) response.StatusCode}",
-                                     response.Content);
+                            Error = new SensorException("Connection failure", response.ErrorException);
                         }
                     }
 

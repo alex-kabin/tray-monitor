@@ -14,7 +14,7 @@ namespace TrayMonitor.Indicators
         }
         
         protected override void Draw(Graphics gfx, SensorData data) {
-            const float r = 7.1f;
+            const float r = 7.15f;
             
             gfx.Clear(Color.Transparent);
             //gfx.DrawRectangle(new Pen(Pens.Gray, (Size.Width-w)/2, 0, w, h);            
@@ -53,6 +53,7 @@ namespace TrayMonitor.Indicators
                         if (data.Value != null) {
                             try {
                                 value = Convert.ToBoolean(data.Value);
+                                title += value == true ? "ON" : "OFF";
                             }
                             catch (SystemException) {
                                 title += data.Value;

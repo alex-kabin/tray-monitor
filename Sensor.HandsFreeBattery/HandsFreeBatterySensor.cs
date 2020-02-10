@@ -236,7 +236,6 @@ namespace Sensor.HandsFreeBattery
                                 }
                             }
                         }
-
                         Value = val;
                     }
                     else if (AtCommand.Is(command, "AT+XAPL=", out value)) {

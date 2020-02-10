@@ -25,7 +25,7 @@ namespace TrayMonitor
                     levelLabel.ForeColor = Color.DarkGray;
                     break;
                 case LogLevel.Info:
-                    levelLabel.ForeColor = Color.Blue;
+                    levelLabel.ForeColor = Color.LightSkyBlue;
                     break;
                 case LogLevel.Warn:
                     levelLabel.ForeColor = Color.Yellow;

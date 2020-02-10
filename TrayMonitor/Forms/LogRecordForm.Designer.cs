@@ -86,10 +86,10 @@ namespace TrayMonitor
             // loggerLabel
             // 
             this.loggerLabel.AutoSize = true;
-            this.loggerLabel.Font = new System.Drawing.Font("Arial", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.loggerLabel.Location = new System.Drawing.Point(60, 46);
+            this.loggerLabel.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.loggerLabel.Location = new System.Drawing.Point(60, 44);
             this.loggerLabel.Name = "loggerLabel";
-            this.loggerLabel.Size = new System.Drawing.Size(43, 15);
+            this.loggerLabel.Size = new System.Drawing.Size(46, 18);
             this.loggerLabel.TabIndex = 0;
             this.loggerLabel.Text = "logger";
             // 
@@ -117,11 +117,10 @@ namespace TrayMonitor
             // 
             this.levelLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.levelLabel.BackColor = System.Drawing.Color.Black;
-            this.levelLabel.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.levelLabel.Font = new System.Drawing.Font("Trebuchet MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.levelLabel.ForeColor = System.Drawing.Color.White;
             this.levelLabel.Location = new System.Drawing.Point(460, 0);
             this.levelLabel.Name = "levelLabel";
-            this.levelLabel.Padding = new System.Windows.Forms.Padding(4);
             this.levelLabel.Size = new System.Drawing.Size(100, 32);
             this.levelLabel.TabIndex = 0;
             this.levelLabel.Text = "level";

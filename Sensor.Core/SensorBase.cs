@@ -17,7 +17,7 @@ namespace Sensor.Core
             protected set {
                 if (_state != value) {
                     _state = value;
-                    StateChanged?.Invoke(this, new SensorStateEventArgs(value));
+                    StateChanged?.Invoke(this, new SensorStateEventArgs(_state));
                 } 
             }
         }
@@ -29,7 +29,10 @@ namespace Sensor.Core
             protected set {
                 if (!Equals(_value, value)) {
                     _value = value;
-                    ValueChanged?.Invoke(this, new SensorValueEventArgs(value));
+                    if (_value != null) {
+                        _error = null;
+                    }
+                    ValueChanged?.Invoke(this, new SensorValueEventArgs(_value));
                 }
             }
         }
@@ -39,9 +42,12 @@ namespace Sensor.Core
         public SensorException Error {
             get => _error;
             protected set {
-                _error = value;
-                if (value != null) {
-                    ErrorOccured?.Invoke(this, EventArgs.Empty);
+                if (!Equals(_error, value)) {
+                    _error = value;
+                    if (_error != null) {
+                        _value = null;
+                        ErrorOccured?.Invoke(this, EventArgs.Empty);
+                    }
                 }
             }
         }

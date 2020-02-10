@@ -12,6 +12,10 @@ namespace Logging.Core
             logger.Log(LogLevel.Info, message?.ToString());
         }
         
+        public static void Info(this ILogger logger, object message, object details) {
+            logger.Log(LogLevel.Info, message?.ToString(), details);
+        }
+        
         public static void Warn(this ILogger logger, object message) {
             logger.Log(LogLevel.Warn, message?.ToString());
         }
