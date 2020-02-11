@@ -14,11 +14,11 @@ where:
 After successful start there will be indicator icon in system tray. 
 Tray icon has context menu with log view option to diagnose problems.
 
-#####Currently implemented sensors and indicators:
+##### Currently implemented sensors and indicators:
 * _Bluetooth HandsFree battery monitor_ -> BatteryTrayIndicator
 * _Spring Actuator Health endpoint monitor_ -> LampTrayIndicator
 
-####How to use Bluetooth HandsFree battery monitor:
+#### How to use Bluetooth HandsFree battery monitor:
 Bluetooth HandsFree battery sensor uses HF Indicators feature as described in [HFP V1.7](https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=292287) and Apple Specific features from [Apple Accessory Design Guidelines](https://developer.apple.com/accessories/Accessory-Design-Guidelines.pdf)   
 
 First, stop Windows Service '**BTAGService**' (Bluetooth Audio Gateway Service) as it prevents connection to HandsFree device.
@@ -32,7 +32,7 @@ where `DeviceName` is the name of the paired handsfree bluetooth device to monit
 
 After successful start there will be battery icon in the system tray with battery charge level or error mark. Tray icon has context menu with log view option to diagnose problems.
 
-####How to use Spring Boot Actuator health monitor:
+#### How to use Spring Boot Actuator health monitor:
 Start TrayMonitor from command line (or shortcut link) with arguments: 
 
     -c -s Sensor.SpringActuatorHealth.SpringActuatorHealthSensor,Sensor.SpringActuatorHealth "URL=http://localhost:8080/actuator/health" "Period=00:00:10" -i TrayMonitor.Indicators.LampTrayIndicator,TrayMonitor
