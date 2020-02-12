@@ -3,7 +3,7 @@
 Utility for monitoring various sensors and displaying results as tray icon indicators. 
 Written with C# (+WinForms) and requires .NET Framework 4.7.2+ to run.
 
-The utility is portable (has not installer) and expects to be started with command line arguments:
+The utility is portable (has no installer) and expects to be started with command line arguments:
 
     [-c|--connect] -s|--sensor \"SensorType\" \"Key=Value\"* -i|--indicator \"IndicatorType\" \"Key=Value\"*"
 
@@ -12,7 +12,7 @@ where:
 * `-s` or `--sensor` specifies assembly qualified name of SensorType. Also there could be some "Key=Value" pairs with sensor configuration settings;
 * `-i` or `--indicator` specifies assembly qualified name of IndicatorType. Also there could be some "Key=Value" pairs with indicator configuration settings;
 
-After successful start there will be indicator icon in system tray. 
+After successful start there will be indicator icon in the system tray. 
 Tray icon has context menu with log view option to diagnose problems.
 
 ##### Currently implemented sensors and indicators:
