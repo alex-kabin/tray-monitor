@@ -1,6 +1,7 @@
 ## Tray Monitor
 
-Utility for monitoring various sensors and displaying results in tray icon indicators, written with C# (+WinForms) and requires .NET Framework 4.7.2+ to run.
+Utility for monitoring various sensors and displaying results as tray icon indicators. 
+Written with C# (+WinForms) and requires .NET Framework 4.7.2+ to run.
 
 The utility is portable (has not installer) and expects to be started with command line arguments:
 
