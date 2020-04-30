@@ -18,6 +18,7 @@ Tray icon has context menu with log view option to diagnose problems.
 ##### Currently implemented sensors and indicators:
 * _Bluetooth HandsFree battery monitor_ -> BatteryTrayIndicator
 * _Spring Actuator Health endpoint monitor_ -> LampTrayIndicator
+* _PerformanceCounter monitor_ -> GraphTrayIndicator
 
 #### How to use Bluetooth HandsFree battery monitor:
 Bluetooth HandsFree battery sensor uses HF Indicators feature as described in [HFP V1.7](https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=292287) and Apple Specific features from [Apple Accessory Design Guidelines](https://developer.apple.com/accessories/Accessory-Design-Guidelines.pdf)   
@@ -41,6 +42,14 @@ Start TrayMonitor from command line (or shortcut link) with arguments:
 where `URL` is url of the health endpoint, and `Period` is polling period (in TimeSpan format) 
 
 After successful start there will be lamp icon in the system tray with health status (GREEN - up, RED - down) or error mark. Tray icon has context menu with log view option to diagnose problems.
+
+#### How to use PerformanceCounter monitor:
+Start TrayMonitor from command line (or shortcut link) with arguments: 
+
+    -c -s Sensor.PerfCounter.PerfCounterSensor,Sensor.PerfCounter "Period=1000" "Category=Processor" "Counter=% Processor Time" "Instance=_Total" -i TrayMonitor.Indicators.GraphTrayIndicator,TrayMonitor
+    
+where `Category`, `Counter`, `Instance` make up performance counter (see docs on Windows Performance Counters), and `Period` is polling period (in milliseconds) 
+
 
 #### How to make custom Sensor or Indicator:
 * You can implement your custom sensor by subclassing `Sensor.Core.SensorBase` class

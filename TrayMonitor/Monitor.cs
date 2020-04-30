@@ -2,6 +2,8 @@ using System;
 using System.ComponentModel;
 using System.Reactive.Linq;
 using System.Threading;
+using Logging.Core;
+using NLog.Fluent;
 using Sensor.Core;
 using TrayMonitor.Commands;
 using TrayMonitor.Core.Indicators;
@@ -11,35 +13,34 @@ namespace TrayMonitor
 {
     public class Monitor : IComponent
     {
+        private static readonly ILogger Log = LoggerFactory.GetLogger(nameof(Monitor));
+        
         private IIndicator _indicator;
         private ISensor _sensor;
         private IDisposable _sensorSubscription;
         private CancellationTokenSource _cts;
-        private SynchronizationContext _sync;
 
         public Monitor(ISensor sensor, IIndicator indicator) {
             _sensor = sensor ?? throw new ArgumentNullException(nameof(sensor));
             _indicator = indicator ?? throw new ArgumentNullException(nameof(indicator));
-            _sync = SynchronizationContext.Current;
-            _sensorSubscription = _sensor.AsObservable().Subscribe(
-                sd => _sync.Post(_ => Update(sd), null)
-            );
+           
+            _sensorSubscription = _sensor.AsObservable().ObserveOn(SynchronizationContext.Current).Subscribe(Update);
             
             ControlCommand = new ActionCommand("", Control);
             
-            Update(_sensor.GetData());
+            Update(_sensor.GetState());
         }
 
         public ActionCommand ControlCommand { get; }
         
         private void Control() {
-            var state = _sensor.State;
+            var sensorStatus = _sensor.Status;
 
-            if (state == SensorState.Offline) {
+            if (sensorStatus == SensorStatus.Offline) {
                 _cts = new CancellationTokenSource();
                 _sensor.Connect(_cts.Token);
             }
-            else if (state == SensorState.Online) {
+            else if (sensorStatus == SensorStatus.Online) {
                 _sensor.Disconnect(CancellationToken.None);
                 if (_cts != null) {
                     _cts.Dispose();
@@ -51,33 +52,32 @@ namespace TrayMonitor
                 _cts.Dispose();
                 _cts = null;
             }
-
         }
 
-        private void Update(SensorData sensorData = null) {
-            UpdateIndicator(sensorData);
-            UpdateControlCommand(sensorData);
+        private void Update(SensorState sensorState) {
+            UpdateIndicator(sensorState);
+            UpdateControlCommand(sensorState);
         }
 
-        private void UpdateIndicator(SensorData sensorData) {
-            _indicator?.Update(sensorData);
+        private void UpdateIndicator(SensorState sensorState) {
+            _indicator?.Update(sensorState);
         }
 
-        private void UpdateControlCommand(SensorData sensorData) {
-            switch (sensorData?.State) {
-                case SensorState.Offline:
+        private void UpdateControlCommand(SensorState sensorState) {
+            switch (sensorState.Status) {
+                case SensorStatus.Offline:
                     ControlCommand.Name = "Connect";
                     ControlCommand.CanExecute = true;
                     break;
-                case SensorState.Online:
+                case SensorStatus.Online:
                     ControlCommand.Name = "Disconnect";
                     ControlCommand.CanExecute = true;
                     break;
-                case SensorState.Connecting:
+                case SensorStatus.Connecting:
                     ControlCommand.Name = "Cancel";
                     ControlCommand.CanExecute = true;
                     break;
-                case SensorState.Disconnecting:
+                case SensorStatus.Disconnecting:
                     ControlCommand.Name = "Disconnecting...";
                     ControlCommand.CanExecute = false;
                     break;
@@ -91,20 +91,9 @@ namespace TrayMonitor
         public ISite Site { get; set; }
         
         public void Dispose() {
-            if (_sensorSubscription != null) {
-                _sensorSubscription.Dispose();
-                _sensorSubscription = null;
-            }
-
-            if (_sensor != null) {
-                (_sensor as IDisposable)?.Dispose();
-                _sensor = null;
-            }
-
-            if (_indicator != null) {
-                (_indicator as IDisposable)?.Dispose();
-                _indicator = null;
-            }
+            Disposable.Destroy(ref _sensorSubscription);
+            Disposable.Destroy(ref _sensor);
+            Disposable.Destroy(ref _indicator);
 
             if (_cts != null) {
                 _cts.Cancel();

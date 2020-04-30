@@ -12,7 +12,7 @@ using Sensor.Core;
 
 namespace Sensor.HandsFreeBattery
 {
-    public class HandsFreeBatterySensor : SensorBase, IDisposable
+    public class HandsFreeBatterySensor : SensorBase, IConfigurable, IDisposable
     {
         private static readonly ILogger Log = LoggerFactory.GetLogger(nameof(HandsFreeBatterySensor));
         
@@ -26,10 +26,9 @@ namespace Sensor.HandsFreeBattery
         private CancellationTokenSource _cancellation;
         
         public HandsFreeBatterySensor() {
-            _state = SensorState.Offline;
         }
 
-        public override void Configure(IEnumerable<(string, string)> parameters) {
+        public void Configure(IEnumerable<(string, string)> parameters) {
             foreach ((string key, string value) in parameters) {
                 if (string.Equals(key, "DeviceName", StringComparison.InvariantCultureIgnoreCase)) {
                     Title = _deviceName = value;
@@ -164,26 +163,21 @@ namespace Sensor.HandsFreeBattery
         }
 
         private void Reset() {
-            if (_stream != null) {
-                _stream.Dispose();
-                _stream = null;
-            }
-            if (_client != null) {
-                _client.Dispose();
-                _client = null;
-            }
+            Disposable.Destroy(ref _stream);
+            Disposable.Destroy(ref _client);
+            
             _device = null;
             Title = _deviceName;
-            State = SensorState.Offline;
+            Status = SensorStatus.Offline;
         }
 
         public override async Task Connect(CancellationToken cancellationToken) {
-            if (State != SensorState.Offline) {
+            if (Status != SensorStatus.Offline) {
                 return;
             }
 
-            Error = null;
-            State = SensorState.Connecting;
+            _error = null;
+            Status = SensorStatus.Connecting;
 
             try {
                 await ConnectDevice(cancellationToken);
@@ -212,7 +206,7 @@ namespace Sensor.HandsFreeBattery
             );
 #pragma warning restore 4014
 
-            State = SensorState.Online;
+            Status = SensorStatus.Online;
         }
 
         private async void DoConversation(CancellationToken cancellationToken) {
@@ -301,13 +295,16 @@ namespace Sensor.HandsFreeBattery
         }
 
         public override async Task Disconnect(CancellationToken cancellationToken) {
-            if (State != SensorState.Online) {
+            if (Status != SensorStatus.Online) {
                 return;
             }
 
             Log.Debug("Disconnecting...");
-            State = SensorState.Disconnecting;
+            Status = SensorStatus.Disconnecting;
 
+            // close stream to interrupt all read awaitings
+            Disposable.Destroy(ref _stream);
+            
             if (_cancellation != null) {
                 _cancellation.Cancel();
                 _cancellation.Dispose();

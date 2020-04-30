@@ -105,6 +105,7 @@
     <Compile Include="App.cs" />
     <Compile Include="Commands\ActionCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Indicators\GraphTrayIndicator.cs" />
     <Compile Include="Indicators\LampTrayIndicator.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="NLogLogger.cs" />
@@ -162,6 +163,10 @@
     <ProjectReference Include="..\Sensor.HandsFreeBattery\Sensor.HandsFreeBattery.csproj">
       <Project>{fa4e4091-f34f-46ad-a1b3-e411471b5ab0}</Project>
       <Name>Sensor.HandsFreeBattery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sensor.PerfCounter\Sensor.PerfCounter.csproj">
+      <Project>{b51d7f06-3763-48b4-9ad7-ad5f3335df27}</Project>
+      <Name>Sensor.PerfCounter</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sensor.SpringActuatorHealth\Sensor.SpringActuatorHealth.csproj">
       <Project>{e1b5cc72-8e71-4d63-beb3-4c0a73f9ba11}</Project>

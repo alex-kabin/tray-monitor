@@ -7,8 +7,6 @@ namespace Sensor.Core
 {
     public interface ISensor
     {
-        void Configure(IEnumerable<(string, string)> parameters);
-
         Task Connect(CancellationToken ct);
         
         Task Disconnect(CancellationToken ct);
@@ -21,12 +19,12 @@ namespace Sensor.Core
         
         event EventHandler ErrorOccured;
         
-        SensorState State { get; }
+        SensorStatus Status { get; }
         
-        event EventHandler<SensorStateEventArgs> StateChanged;
+        event EventHandler<SensorStatusEventArgs> StatusChanged;
         
         object Value { get; }
 
-        event EventHandler<SensorValueEventArgs> ValueChanged;
+        event EventHandler<SensorValueEventArgs> ValueReady;
     }
 }

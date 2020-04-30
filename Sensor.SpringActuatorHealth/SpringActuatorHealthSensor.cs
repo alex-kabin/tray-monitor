@@ -8,7 +8,7 @@ using Sensor.Core;
 
 namespace Sensor.SpringActuatorHealth
 {
-    public class SpringActuatorHealthSensor : SensorBase
+    public class SpringActuatorHealthSensor : SensorBase, IConfigurable
     {
         private static readonly ILogger Log = LoggerFactory.GetLogger(nameof(SpringActuatorHealthSensor));
         
@@ -24,15 +24,15 @@ namespace Sensor.SpringActuatorHealth
             };
         }
 
-        public override void Configure(IEnumerable<(string, string)> parameters) {
+        public void Configure(IEnumerable<(string, string)> parameters) {
             foreach ((string key, string value) in parameters) {
                 if (string.Equals(key, "URL", StringComparison.OrdinalIgnoreCase)) {
                     Title = _url = value;
                 }
-                if (string.Equals(key, "Period", StringComparison.OrdinalIgnoreCase)) {
+                else if (string.Equals(key, "Period", StringComparison.OrdinalIgnoreCase)) {
                     _period = TimeSpan.Parse(value);
                 }
-                if (string.Equals(key, "Timeout", StringComparison.OrdinalIgnoreCase)) {
+                else if (string.Equals(key, "Timeout", StringComparison.OrdinalIgnoreCase)) {
                     _timeout = TimeSpan.Parse(value);
                 }
             }
@@ -42,12 +42,12 @@ namespace Sensor.SpringActuatorHealth
             if (String.IsNullOrEmpty(_url)) {
                 throw new InvalidOperationException("URL must be set");
             }
-            if (_state != SensorState.Offline) {
+            if (Status != SensorStatus.Offline) {
                 return;
             }
-
+            
+            _status = SensorStatus.Connecting;
             Error = null;
-            _state = SensorState.Connecting;
             
             _cancellation?.Dispose();
             _cancellation = new CancellationTokenSource();
@@ -60,12 +60,14 @@ namespace Sensor.SpringActuatorHealth
             );
 #pragma warning restore 4014
 
-            State = SensorState.Online;
+            Status = SensorStatus.Online;
         }
 
         private async void CheckHealth(CancellationToken cancellationToken) {
             try {
-                while (!cancellationToken.IsCancellationRequested) {
+                while (true) {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    
                     Log.Debug($"Requesting health endpoint {_url}");
                     var request = new RestRequest(_url) {
                             Timeout = (int)_timeout.TotalMilliseconds
@@ -91,25 +93,24 @@ namespace Sensor.SpringActuatorHealth
                 }
             }
             catch (OperationCanceledException) {
-                Error = null;
                 Log.Debug("Check canceled");
+                _error = null;
+                Status = SensorStatus.Offline;
             }
             catch (Exception ex) {
                 Log.Error("Check failure", ex);
+                _status = SensorStatus.Offline;
                 Error = new SensorException("Check failure", ex);
             }
-
-            Value = null;
-            State = SensorState.Offline;
         }
 
         public override async Task Disconnect(CancellationToken cancellationToken) {
-            if (State != SensorState.Online) {
+            if (Status != SensorStatus.Online) {
                 return;
             }
 
             Log.Debug("Disconnecting...");
-            State = SensorState.Disconnecting;
+            Status = SensorStatus.Disconnecting;
 
             if (_cancellation != null) {
                 _cancellation.Cancel();

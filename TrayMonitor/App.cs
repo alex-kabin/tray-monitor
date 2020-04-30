@@ -90,11 +90,11 @@ namespace TrayMonitor
             var objectBuilder = new ObjectBuilder();
 
             var sensor = objectBuilder.Create<ISensor>(_configuration.SensorTypeName);
-            sensor.Configure(_configuration.SensorProperties);
-
+            (sensor as IConfigurable)?.Configure(_configuration.SensorProperties);
+            
             var indicator = objectBuilder.Create<IIndicator>(_configuration.IndicatorTypeName, _notifyIcon);
-            indicator.Configure(_configuration.IndicatorProperties);
-
+            (indicator as IConfigurable)?.Configure(_configuration.IndicatorProperties);
+            
             _monitor = new Monitor(sensor, indicator);
             components.Add(_monitor);
         }

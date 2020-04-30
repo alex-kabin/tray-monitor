@@ -13,50 +13,52 @@ namespace TrayMonitor.Indicators
             Update(null);
         }
         
-        protected override void Draw(Graphics gfx, SensorData data) {
+        protected override void Draw(Graphics gfx) {
             const float r = 7.15f;
+
+            SensorState state = CurrentState;
             
             gfx.Clear(Color.Transparent);
             //gfx.DrawRectangle(new Pen(Pens.Gray, (Size.Width-w)/2, 0, w, h);            
             
-            float ix = Size.Width/2f - r;
-            float iy = Size.Height/2f - r;
+            float ix = MaxWidth/2f - r;
+            float iy = MaxHeight/2f - r;
             float iw = r * 2;
             float ih = r * 2;
-            string title = string.IsNullOrEmpty(data?.Title) ? string.Empty : $"{data.Title}: ";
+            string title = string.IsNullOrEmpty(state?.Title) ? string.Empty : $"{state.Title}: ";
             
             gfx.SmoothingMode = SmoothingMode.AntiAlias;
-            if (data != null) {
-                if (data.Error != null) {
+            if (state != null) {
+                if (state.Error != null) {
                     //gfx.FillEllipse(Brushes.DimGray, ix, iy, iw, ih);
                     gfx.DrawEllipse(new Pen(Color.Red, 2f), ix, iy,iw, ih);
-                    title += data.Error.Message;
+                    title += state.Error.Message;
                 }
                 else {
-                    if (data.State == SensorState.Connecting) {
+                    if (state.Status == SensorStatus.Connecting) {
                         //gfx.FillEllipse(Brushes.DimGray, ix, iy, iw, ih);
                         gfx.DrawEllipse(new Pen(Color.Cyan, 2), ix, iy,iw, ih);
                         title += "Connecting...";
                     }
-                    else if (data.State == SensorState.Disconnecting) {
+                    else if (state.Status == SensorStatus.Disconnecting) {
                         //gfx.FillEllipse(Brushes.DimGray, ix, iy, iw, ih);
                         gfx.DrawEllipse(new Pen(Color.Fuchsia, 2), ix, iy,iw, ih);
                         title += "Disconnecting...";
                     }
-                    else if (data.State == SensorState.Offline) {
+                    else if (state.Status == SensorStatus.Offline) {
                         gfx.FillEllipse(Brushes.Black, ix, iy, iw, ih);
                         gfx.DrawEllipse(new Pen(Color.DarkGray, 2), ix, iy,iw, ih);
                         title += "Offline";
                     }
-                    else if (data.State == SensorState.Online) {
+                    else if (state.Status == SensorStatus.Online) {
                         bool? value = null;
-                        if (data.Value != null) {
+                        if (state.Value != null) {
                             try {
-                                value = Convert.ToBoolean(data.Value);
+                                value = Convert.ToBoolean(state.Value);
                                 title += value == true ? "ON" : "OFF";
                             }
                             catch (SystemException) {
-                                title += data.Value;
+                                title += state.Value;
                             }
                         }
                         else {
