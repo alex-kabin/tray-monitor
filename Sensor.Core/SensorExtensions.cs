@@ -23,14 +23,14 @@ namespace Sensor.Core
 
                     sensor.ValueReady += OnSensorChange;
                     sensor.StatusChanged += OnSensorChange;
-                    sensor.ErrorOccured += OnSensorChange;
+                    sensor.ErrorOccurred += OnSensorChange;
                     sensor.TitleChanged += OnSensorChange;
 
                     return new Disposable(
                         () => {
                             sensor.ValueReady -= OnSensorChange;
                             sensor.StatusChanged -= OnSensorChange;
-                            sensor.ErrorOccured -= OnSensorChange;
+                            sensor.ErrorOccurred -= OnSensorChange;
                             sensor.TitleChanged -= OnSensorChange;
                         }
                     );

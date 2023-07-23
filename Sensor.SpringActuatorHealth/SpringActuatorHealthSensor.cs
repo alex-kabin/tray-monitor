@@ -18,10 +18,12 @@ namespace Sensor.SpringActuatorHealth
         private TimeSpan _timeout = TimeSpan.FromSeconds(20);
         private CancellationTokenSource _cancellation;
 
-        public SpringActuatorHealthSensor() {
-            _restClient = new RestClient {
-                    RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true
+        public SpringActuatorHealthSensor()
+        {
+            var restClientOptions = new RestClientOptions {
+                RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true
             };
+            _restClient = new RestClient(restClientOptions) { };
         }
 
         public void Configure(IEnumerable<(string, string)> parameters) {
@@ -39,26 +41,25 @@ namespace Sensor.SpringActuatorHealth
         }
 
         public override async Task Connect(CancellationToken cancellationToken) {
-            if (String.IsNullOrEmpty(_url)) {
+            if (string.IsNullOrEmpty(_url)) {
                 throw new InvalidOperationException("URL must be set");
             }
             if (Status != SensorStatus.Offline) {
                 return;
             }
             
-            _status = SensorStatus.Connecting;
+            Status = SensorStatus.Connecting;
             Error = null;
             
             _cancellation?.Dispose();
             _cancellation = new CancellationTokenSource();
-#pragma warning disable 4014
+
             Task.Factory.StartNew(
                     () => CheckHealth(_cancellation.Token), 
                     _cancellation.Token, 
                     TaskCreationOptions.LongRunning, 
                     TaskScheduler.Default
             );
-#pragma warning restore 4014
 
             Status = SensorStatus.Online;
         }
@@ -74,14 +75,12 @@ namespace Sensor.SpringActuatorHealth
                     };
                     var response = await _restClient.ExecuteGetAsync<SpringActuatorHealthInfo>(request, cancellationToken);
                     if (response.Data != null) {
-                        Value = response.Data.Status == SpringActuatorHealthStatus.UP;
+                        Value = "up".Equals(response.Data.Status, StringComparison.OrdinalIgnoreCase);
                         Log.Info($"The server responded with HTTP code {(int) response.StatusCode} ({response.StatusCode}); result={response.Data.Status}");
                     }
                     else {
                         if (response.ErrorException == null) {
-                            Log.Warn(
-                                    $"The server responded with HTTP code {(int) response.StatusCode} ({response.StatusCode})",
-                                    response.Content);
+                            Log.Warn($"The server responded with HTTP code {(int) response.StatusCode} ({response.StatusCode})", response.Content);
                             Error = new SensorException("Bad response");
                         } else {
                             Log.Warn($"Connection failure: {response.ErrorMessage}", response.ErrorException);
@@ -94,12 +93,12 @@ namespace Sensor.SpringActuatorHealth
             }
             catch (OperationCanceledException) {
                 Log.Debug("Check canceled");
-                _error = null;
+                Error = null;
                 Status = SensorStatus.Offline;
             }
             catch (Exception ex) {
                 Log.Error("Check failure", ex);
-                _status = SensorStatus.Offline;
+                Status = SensorStatus.Offline;
                 Error = new SensorException("Check failure", ex);
             }
         }

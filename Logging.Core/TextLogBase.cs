@@ -1,10 +1,10 @@
 ﻿namespace Logging.Core
 {
-    public abstract class TextLog : ILog
+    public abstract class TextLogBase : ILog
     {
         private readonly ILogRecordFormatter _formatter;
 
-        protected TextLog(ILogRecordFormatter formatter) {
+        protected TextLogBase(ILogRecordFormatter formatter) {
             _formatter = formatter;
         }
 

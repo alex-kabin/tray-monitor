@@ -17,7 +17,7 @@ namespace Sensor.Core
         
         SensorException Error { get; }
         
-        event EventHandler ErrorOccured;
+        event EventHandler ErrorOccurred;
         
         SensorStatus Status { get; }
         

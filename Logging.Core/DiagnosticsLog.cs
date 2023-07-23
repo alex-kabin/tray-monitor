@@ -2,7 +2,7 @@ using System;
 
 namespace Logging.Core 
 {
-    public class DiagnosticsLog : TextLog
+    public class DiagnosticsLog : TextLogBase
     {
         public DiagnosticsLog(ILogRecordFormatter logRecordFormatter) 
                 : base(logRecordFormatter) {

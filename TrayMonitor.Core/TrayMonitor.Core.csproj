@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TrayMonitor.Core</RootNamespace>
     <AssemblyName>TrayMonitor.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,7 +46,7 @@
     <Compile Include="Icons\DrawableIcon.cs" />
     <Compile Include="Icons\IconHelper.cs" />
     <Compile Include="Indicators\IIndicator.cs" />
-    <Compile Include="Indicators\TrayIndicator.cs" />
+    <Compile Include="Indicators\TrayIndicatorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

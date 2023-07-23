@@ -10,7 +10,7 @@ namespace Sensor.Core
         public abstract Task Connect(CancellationToken cancellationToken);
         public abstract Task Disconnect(CancellationToken cancellationToken);
         
-        protected SensorStatus _status = SensorStatus.Offline;
+        private SensorStatus _status = SensorStatus.Offline;
         public SensorStatus Status {
             get => _status;
             protected set {
@@ -23,7 +23,7 @@ namespace Sensor.Core
         }
         public event EventHandler<SensorStatusEventArgs> StatusChanged;
 
-        protected object _value;
+        private object _value;
         public object Value {
             get => _value;
             protected set {
@@ -36,7 +36,7 @@ namespace Sensor.Core
         }
         public event EventHandler<SensorValueEventArgs> ValueReady;
 
-        protected SensorException _error;
+        private SensorException _error;
         public SensorException Error {
             get => _error;
             protected set {
@@ -44,14 +44,14 @@ namespace Sensor.Core
                     _error = value;
                     if (_error != null) {
                         _value = null;
-                        ErrorOccured?.Invoke(this, EventArgs.Empty);
+                        ErrorOccurred?.Invoke(this, EventArgs.Empty);
                     }
                 }
             }
         }
-        public event EventHandler ErrorOccured;
+        public event EventHandler ErrorOccurred;
 
-        protected string _title;
+        private string _title;
         public string Title {
             get => _title;
             protected set {

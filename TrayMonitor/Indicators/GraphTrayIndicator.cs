@@ -8,7 +8,7 @@ using TrayMonitor.Core.Indicators;
 
 namespace TrayMonitor.Indicators
 {
-    public class GraphTrayIndicator : TrayIndicator, IConfigurable
+    public class GraphTrayIndicator : TrayIndicatorBase, IConfigurable
     {
         class History
         {

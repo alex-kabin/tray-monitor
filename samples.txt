@@ -1,0 +1,5 @@
+-c -s Sensor.HandsFreeBattery.HandsFreeBatterySensor,Sensor.HandsFreeBattery "DeviceName=Mpow M5" -i TrayMonitor.Indicators.BatteryTrayIndicator,TrayMonitor
+
+-c -s Sensor.SpringActuatorHealth.SpringActuatorHealthSensor,Sensor.SpringActuatorHealth "URL=http://localhost:8080/actuator/health" "Period=00:00:10" -i TrayMonitor.Indicators.LampTrayIndicator,TrayMonitor
+
+-c -s Sensor.PerfCounter.PerfCounterSensor,Sensor.PerfCounter "Period=1000" "Category=Processor" "Counter=% Processor Time" "Instance=_Total" -i TrayMonitor.Indicators.GraphTrayIndicator,TrayMonitor

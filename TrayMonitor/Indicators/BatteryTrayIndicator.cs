@@ -7,7 +7,7 @@ using TrayMonitor.Core.Indicators;
 
 namespace TrayMonitor.Indicators
 {
-    public class BatteryTrayIndicator : TrayIndicator
+    public class BatteryTrayIndicator : TrayIndicatorBase
     {
         private const int GREEN_LEVEL = 50;
         private const int YELLOW_LEVEL = 15;

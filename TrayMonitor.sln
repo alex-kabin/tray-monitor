@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29613.14
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrayMonitor", "TrayMonitor\TrayMonitor.csproj", "{8AE595EF-36C9-4A3B-B6FD-7E62D57FE3DC}"
 EndProject
@@ -13,9 +13,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging.Core", "Logging.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrayMonitor.Core", "TrayMonitor.Core\TrayMonitor.Core.csproj", "{19942248-C4D7-4F63-8B23-7B922B8F4C82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensor.SpringActuatorHealth", "Sensor.SpringActuatorHealth\Sensor.SpringActuatorHealth.csproj", "{E1B5CC72-8E71-4D63-BEB3-4C0A73F9BA11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensor.SpringActuatorHealth", "Sensor.SpringActuatorHealth\Sensor.SpringActuatorHealth.csproj", "{E1B5CC72-8E71-4D63-BEB3-4C0A73F9BA11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensor.PerfCounter", "Sensor.PerfCounter\Sensor.PerfCounter.csproj", "{B51D7F06-3763-48B4-9AD7-AD5F3335DF27}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".files", ".files", "{60A18F82-CC53-4FFF-A9FB-10350B3AD7FB}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+		samples.txt = samples.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,7 +7,7 @@ using TrayMonitor.Core.Icons;
 
 namespace TrayMonitor.Core.Indicators
 {
-    public abstract class TrayIndicator : IIndicator, IDisposable
+    public abstract class TrayIndicatorBase : IIndicator, IDisposable
     {
         private const int MAX_TITLE_LENGTH = 63;
         
@@ -20,7 +20,7 @@ namespace TrayMonitor.Core.Indicators
             private readonly Action<Graphics> _draw;
 
             public DrawableTrayIcon(NotifyIcon notifyIcon, Action<Graphics> draw)
-                    : base(TrayIndicator.Size, icon => notifyIcon.Icon = icon) {
+                    : base(TrayIndicatorBase.Size, icon => notifyIcon.Icon = icon) {
                 _draw = draw;
             }
 
@@ -34,7 +34,7 @@ namespace TrayMonitor.Core.Indicators
 
         protected SensorState CurrentState { get; private set; }
         
-        protected TrayIndicator(NotifyIcon notifyIcon) {
+        protected TrayIndicatorBase(NotifyIcon notifyIcon) {
             _notifyIcon = notifyIcon;
             _trayIcon = new DrawableTrayIcon(notifyIcon, Draw);
         }

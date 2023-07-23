@@ -176,7 +176,7 @@ namespace Sensor.HandsFreeBattery
                 return;
             }
 
-            _error = null;
+            Error = null;
             Status = SensorStatus.Connecting;
 
             try {
@@ -189,7 +189,7 @@ namespace Sensor.HandsFreeBattery
                     Log.Debug("Connection canceled");
                 } else {
                     Log.Error("Connection failure", ex);
-                    Error = ex is SensorException sensorException ? sensorException : new SensorException("Connection failure", ex);
+                    Error = ex as SensorException ?? new SensorException("Connection failure", ex);
                 }
                 Reset();
                 throw;

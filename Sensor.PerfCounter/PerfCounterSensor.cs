@@ -64,7 +64,7 @@ namespace Sensor.PerfCounter
                 return;
             }
             
-            _status = SensorStatus.Connecting;
+            Status = SensorStatus.Connecting;
             Error = null;
             
             Disposable.Destroy(ref _counter);
@@ -73,21 +73,20 @@ namespace Sensor.PerfCounter
             }
             catch (Exception ex) {
                 Log.Error("Failed creating PerformanceCounter", ex);
-                _status = SensorStatus.Offline;
-                Error = ex is SensorException ? (SensorException)ex : new SensorException("Failed creating PerformanceCounter", ex);
+                Status = SensorStatus.Offline;
+                Error = ex as SensorException ?? new SensorException("Failed creating PerformanceCounter", ex);
                 throw;
             }
 
             _cancellation?.Dispose();
             _cancellation = new CancellationTokenSource();
-#pragma warning disable 4014
+
             Task.Factory.StartNew(
                 () => MonitorPerfCounter(_cancellation.Token), 
                 _cancellation.Token, 
                 TaskCreationOptions.LongRunning, 
                 TaskScheduler.Default
             );
-#pragma warning restore 4014
 
             Status = SensorStatus.Online;
         }
@@ -102,12 +101,12 @@ namespace Sensor.PerfCounter
             }
             catch (OperationCanceledException) {
                 Log.Debug("Monitoring canceled");
-                _error = null;
+                Error = null;
                 Status = SensorStatus.Offline;
             }
             catch (Exception ex) {
                 Log.Error("Monitoring failure", ex);
-                _status = SensorStatus.Offline;
+                Status = SensorStatus.Offline;
                 Error = new SensorException("Monitoring failure", ex);
             }
         }

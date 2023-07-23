@@ -2,7 +2,7 @@ using System;
 
 namespace Logging.Core 
 {
-    public class ConsoleLog : TextLog
+    public class ConsoleLog : TextLogBase
     {
         public ConsoleLog(ILogRecordFormatter logRecordFormatter) 
                 : base(logRecordFormatter) {

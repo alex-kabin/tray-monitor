@@ -7,7 +7,7 @@ using TrayMonitor.Core.Indicators;
 
 namespace TrayMonitor.Indicators
 {
-    public class LampTrayIndicator : TrayIndicator
+    public class LampTrayIndicator : TrayIndicatorBase
     {
         public LampTrayIndicator(NotifyIcon notifyIcon) : base(notifyIcon) {
             Update(null);
